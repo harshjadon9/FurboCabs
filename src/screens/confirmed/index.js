@@ -1,0 +1,222 @@
+import React, { Component } from "react";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  Modal,
+  TextInput,
+} from "react-native";
+import styles from "./style";
+import MapView from "react-native-maps";
+import Savelocations from "../../components/Savelocations/index";
+import Drawermenu from "../../components/Drawermenu/index";
+import Icon from "@expo/vector-icons/FontAwesome";
+
+export default class Confirmed extends Component {
+  constructor() {
+    super();
+    this.state = {
+      modalVisible: false,
+    };
+  }
+
+  closeDrawer() {
+    this.props.navigation.closeDrawer();
+  }
+  openDrawer() {
+    this.props.navigation.openDrawer();
+  }
+
+  setModalVisible(visible) {
+    this.setState({ modalVisible: visible });
+  }
+
+  setModalclose = () => {
+    this.setState({ modalVisible: false });
+  };
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <ScrollView>
+          {/* <View style={styles.mapContainer}>
+            <MapView
+              style={{ flex: 1 }}
+              initialRegion={{
+                latitude: 23.0321,
+                longitude: 72.5252,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+              }}
+            />
+            <View style={styles.menubuttoncontainer}>
+              <TouchableOpacity onPress={() => this.openDrawer()}>
+                <View style={styles.menucontainer}>
+                  <Image
+                    source={require("../../images/menu.png")}
+                    style={{ width: 15, height: 15 }}
+                  />
+                </View>
+              </TouchableOpacity>
+            </View>
+          </View> */}
+
+          <View style={styles.menubuttoncontainer}>
+            <TouchableOpacity onPress={() => this.openDrawer()}>
+              <View style={styles.menucontainer}>
+                <Image
+                  source={require("../../images/menu.png")}
+                  style={{ width: 15, height: 15 }}
+                />
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View style={{ height: 100 }}></View>
+
+          <View style={styles.messagecontainer}>
+            <Icon
+              size={25}
+              style={{ color: "#03df23", fontSize: 50, marginBottom: 15 }}
+              name={"check-circle"}
+            />
+            <Text style={styles.txt2}>Hooray!! </Text>
+            <Text style={styles.txt1}>Your ride is confirmed</Text>
+          </View>
+
+          <View style={styles.buttoncontainer}>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.navigate("Home");
+              }}
+            >
+              <Text style={styles.btntxt}>Home</Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* <View style={styles.searchcontainer}>
+            <View style={styles.searchicon}>
+              <Image
+                source={require("../../images/searcher.png")}
+                style={{ width: 15, height: 15 }}
+              />
+            </View>
+            <View style={{ justifyContent: "center", flex: 1 }}>
+              <TouchableOpacity
+                onPress={() => {
+                  this.setModalVisible(true);
+                }}
+              >
+                <Text
+                  style={{ fontSize: 15, fontFamily: "proximanova-regular" }}
+                >
+                  Search destination
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          <Savelocations
+            navigation={() => this.props.navigation.navigate("Ride")}
+            name="Home"
+            icon={require("../../images/home.png")}
+          />
+          <Savelocations
+            navigation={() => this.props.navigation.navigate("Ride")}
+            name="Work"
+            icon={require("../../images/work.png")}
+          />
+
+          <Modal
+            animationType="slide"
+            transparent={false}
+            visible={this.state.modalVisible}
+            onRequestClose={this.setModalclose}
+          >
+            <View style={styles.modalcontainer}>
+              <View style={styles.modalheader}>
+                <View style={styles.modelcancel}>
+                  <TouchableOpacity onPress={this.setModalclose}>
+                    <Image
+                      style={{ width: 12, height: 12 }}
+                      source={require("../../images/close-button.png")}
+                    />
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.modalheadertitle}>
+                  <View>
+                    <Text style={styles.titletxt}>Trip</Text>
+                  </View>
+                </View>
+                <View style={styles.donecontainer}>
+                  <TouchableOpacity>
+                    <Text style={styles.donetxt}>Done</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+
+              <View style={styles.searchbox}>
+                <View>
+                  <View style={styles.modalsearchcontainer}>
+                    <View style={styles.position}>
+                      <Text style={[styles.positiontxt, { color: "#a537fd" }]}>
+                        Start
+                      </Text>
+                    </View>
+                    <View style={styles.startlocation}>
+                      <TextInput
+                        placeholder="Current location"
+                        placeholderTextColor="#19b5fe"
+                        style={{ fontSize: 15 }}
+                      ></TextInput>
+                    </View>
+                  </View>
+                </View>
+
+                <View>
+                  <View style={styles.modalsearchcontainer}>
+                    <View style={styles.position}>
+                      <Text style={[styles.positiontxt, { color: "#EC38FC" }]}>
+                        End
+                      </Text>
+                    </View>
+                    <View style={styles.endlocation}>
+                      <TextInput
+                        placeholder="Search destination"
+                        placeholderTextColor="#A0A0A0"
+                        style={{ fontSize: 15 }}
+                      ></TextInput>
+                    </View>
+                    <View style={styles.addbutton}>
+                      <TouchableOpacity>
+                        <Image
+                          style={{ width: 30, height: 30 }}
+                          source={require("../../images/add.png")}
+                        />
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+              </View>
+              <Savelocations
+                navigation={() => this.props.navigation.navigate("Ride")}
+                name="Home"
+                icon={require("../../images/home.png")}
+              />
+              <Savelocations
+                navigation={() => this.props.navigation.navigate("Ride")}
+                name="Work"
+                icon={require("../../images/work.png")}
+              />
+              <Savelocations
+                name="Set on map"
+                icon={require("../../images/locationpin.png")}
+              />
+            </View>
+          </Modal> */}
+        </ScrollView>
+      </View>
+    );
+  }
+}
